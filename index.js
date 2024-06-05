@@ -10,23 +10,26 @@ async function loginToTwitter() {
   let driver;
   try {
     const chromeOptions = new chrome.Options();
-    chromeOptions.addArguments("--start-maximized");
+
+    chromeOptions.addArguments("--headless=new")
+        chromeOptions.addArguments("--start-maximized");
     chromeOptions.excludeSwitches("enable-automation");
+    chromeOptions.addArguments("--enable-javascript");
 
     driver = await new Builder().forBrowser('chrome').setChromeOptions(chromeOptions).build();
 
     const url = "https://x.com/i/flow/login"
     await driver.get(url);
 
-    const username = await driver.wait(until.elementLocated(By.css('input[autocomplete="username"]')));
+    const username = await driver.wait(until.elementLocated(By.css('input[autocomplete="username"]')),20000);
     await username.sendKeys(`${process.env.TWITTER_NAME}`, Key.ENTER);
 
-    const password = await driver.wait(until.elementLocated(By.css('input[name="password"]')));
+    const password = await driver.wait(until.elementLocated(By.css('input[name="password"]')),10000);
     await password.sendKeys(`${process.env.TWITTER_PASSWORD}`, Key.ENTER);
 
-    await driver.wait(until.elementLocated(By.css('div[data-testid="trend"]')));
+    await driver.wait(until.elementLocated(By.css('div[data-testid="trend"]')),100000);
     
-      const trendDivs = await driver.findElements(By.css('div[data-testid="trend"]'));
+      const trendDivs = await driver.findElements(By.css('div[data-testid="trend"]'),100000);
       const trendTexts = [];
       for (let div of trendDivs) {
         const hashtagElement = await div.findElement(By.xpath('./div/div[2]/span'));
@@ -59,6 +62,6 @@ app.get("/get",async(req,res)=>{
   console.log(process.env.TWITTER_NAME)
   console.log(process.env.TWITTER_PASSWORD)
 })
-app.listen(3000, () => {
-  console.log('Server started on port 3000');
+app.listen(4000, () => {
+  console.log('Server started on port 4000');
 });
