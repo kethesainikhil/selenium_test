@@ -14,7 +14,8 @@ async function loginToTwitter() {
       width: 1920,
       height: 1080
     };
-    // chromeOptions.addArguments("--headless")
+
+    chromeOptions.addArguments("--headless")
     chromeOptions.addArguments("--start-maximized");
     chromeOptions.excludeSwitches("enable-automation");
     chromeOptions.addArguments("--enable-javascript");
@@ -43,7 +44,7 @@ async function loginToTwitter() {
       await email.sendKeys(`${process.env.TWITTER_EMAIL}`, Key.ENTER);
     }
     const telInputField = await driver.findElements(By.css('input[autocomplete="tel"]'),10000);
-    console.log(telInputField,"check point")
+
     if (telInputField.length > 0) {
       const email = await driver.findElement(By.css('input[autocomplete="tel"]'));
       await email.sendKeys(`${process.env.TWITTER_PHONE}`, Key.ENTER);
