@@ -106,7 +106,7 @@ app.get('/get-hashtags', async (req, res) => {
 });
 app.get('/checm', async (req, res) => {
   try {
-    const trendTexts = await loginToTwitter();
+    const trendTexts = await getTitkle();
     res.send(trendTexts);
   } catch (error) {
     console.error('Error:', error);
