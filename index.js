@@ -70,6 +70,6 @@ app.get("/get",async(req,res)=>{
   console.log(process.env.TWITTER_NAME)
   console.log(process.env.TWITTER_PASSWORD)
 })
-app.listen(4000, () => {
-  console.log('Server started on port 4000');
+app.listen(process.env.PORT, () => {
+  console.log(`Server started on port ${process.env.PORT}`);
 });
