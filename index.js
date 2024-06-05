@@ -16,13 +16,13 @@ async function loginToTwitter() {
     };
     
 
-    chromeOptions.addArguments("--headless")
+    // chromeOptions.addArguments("--headless=new")
         chromeOptions.addArguments("--start-maximized");
     chromeOptions.excludeSwitches("enable-automation");
     chromeOptions.addArguments("--enable-javascript");
-    chromeOptions.addArguments("--disable-gpu");
-    chromeOptions.addArguments("--no-sandbox");
-    chromeOptions.windowSize(screen);
+    // chromeOptions.addArguments("--disable-gpu");
+    // chromeOptions.addArguments("--no-sandbox");
+    // chromeOptions.windowSize(screen);
 
     driver = await new Builder().forBrowser('chrome').setChromeOptions(chromeOptions).build();
 
