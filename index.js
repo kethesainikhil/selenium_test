@@ -16,10 +16,15 @@ async function loginToTwitter() {
     };
     
 
-    chromeOptions.addArguments("--headless=new")
+    
+    chromeOptions.addArguments("--headless")
         chromeOptions.addArguments("--start-maximized");
     chromeOptions.excludeSwitches("enable-automation");
     chromeOptions.addArguments("--enable-javascript");
+    chromeOptions.addArguments("--disable-gpu");
+    chromeOptions.addArguments("--no-sandbox");
+    chromeOptions.addArguments("--remote-debugging-port=9222")
+
     chromeOptions.windowSize(screen);
 
     driver = await new Builder().forBrowser('chrome').setChromeOptions(chromeOptions).build();
@@ -64,10 +69,14 @@ async function getTitkle() {
     };
     
 
-    chromeOptions.addArguments("--headless=new")
+    chromeOptions.addArguments("--headless")
         chromeOptions.addArguments("--start-maximized");
     chromeOptions.excludeSwitches("enable-automation");
     chromeOptions.addArguments("--enable-javascript");
+    chromeOptions.addArguments("--disable-gpu");
+    chromeOptions.addArguments("--no-sandbox");
+    chromeOptions.addArguments("--remote-debugging-port=9222")
+
     chromeOptions.windowSize(screen);
 
     driver = await new Builder().forBrowser('chrome').setChromeOptions(chromeOptions).build();
