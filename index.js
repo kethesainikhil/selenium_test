@@ -20,8 +20,6 @@ async function loginToTwitter() {
         chromeOptions.addArguments("--start-maximized");
     chromeOptions.excludeSwitches("enable-automation");
     chromeOptions.addArguments("--enable-javascript");
-    chromeOptions.addArguments("--disable-gpu");
-    chromeOptions.addArguments("--no-sandbox");
     chromeOptions.windowSize(screen);
 
     driver = await new Builder().forBrowser('chrome').setChromeOptions(chromeOptions).build();
@@ -56,8 +54,48 @@ async function loginToTwitter() {
     }
   }
 }
+async function getTitkle() {
+  let driver;
+  try {
+    const chromeOptions = new chrome.Options();
+    const screen = {
+      width: 1920,
+      height: 1080
+    };
+    
+
+    chromeOptions.addArguments("--headless=new")
+        chromeOptions.addArguments("--start-maximized");
+    chromeOptions.excludeSwitches("enable-automation");
+    chromeOptions.addArguments("--enable-javascript");
+    chromeOptions.windowSize(screen);
+
+    driver = await new Builder().forBrowser('chrome').setChromeOptions(chromeOptions).build();
+
+    const url = "https://x.com/i/flow/login"
+    await driver.get(url);
+
+
+      return driver.getTitle();;// Using sleep in place of time.sleep
+  } catch (error) {
+    console.error('Error:', error);
+  } finally {
+    if (driver) {
+      await driver.quit();
+    }
+  }
+}
 
 app.get('/get-hashtags', async (req, res) => {
+  try {
+    const trendTexts = await loginToTwitter();
+    res.send(trendTexts);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+app.get('/checm', async (req, res) => {
   try {
     const trendTexts = await loginToTwitter();
     res.send(trendTexts);
