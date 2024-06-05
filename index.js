@@ -21,7 +21,7 @@ async function loginToTwitter() {
     chromeOptions.addArguments("--enable-javascript");
     chromeOptions.addArguments("--disable-gpu");
     chromeOptions.addArguments("--no-sandbox");
-    chromeOptions.addArguments("--remote-debugging-port=9222")
+    // chromeOptions.addArguments("--remote-debugging-port=9222")
 
     chromeOptions.windowSize(screen);
 
@@ -37,11 +37,11 @@ async function loginToTwitter() {
     await password.sendKeys(`${process.env.TWITTER_PASSWORD}`, Key.ENTER);
 
     // Check if the email input field is present
-    const emailInputField = await driver.findElements(By.css('input[autocomplete="email"]'));
-    if (emailInputField.length > 0) {
-      const email = await driver.findElement(By.css('input[autocomplete="email"]'));
-      await email.sendKeys(`${process.env.TWITTER_EMAIL}`, Key.ENTER);
-    }
+    // const emailInputField = await driver.findElements(By.css('input[autocomplete="email"]'),20000);
+    // if (emailInputField) {
+    //   const email = await driver.findElement(By.css('input[autocomplete="email"]'),10000);
+    //   await email.sendKeys(`${process.env.TWITTER_EMAIL}`, Key.ENTER);
+    // }
 
     await driver.wait(until.elementLocated(By.css('div[data-testid="trend"]')), 100000);
     
