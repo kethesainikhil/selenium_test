@@ -84,7 +84,7 @@ async function getTitkle() {
     const url = "https://x.com/i/flow/login"
     await driver.get(url);
 
-
+    await driver.getTitle();
       return driver.getTitle();;// Using sleep in place of time.sleep
   } catch (error) {
     console.error('Error:', error);
