@@ -14,9 +14,7 @@ async function loginToTwitter() {
       width: 1920,
       height: 1080
     };
-    
 
-    
     chromeOptions.addArguments("--headless")
         chromeOptions.addArguments("--start-maximized");
     chromeOptions.excludeSwitches("enable-automation");
@@ -32,25 +30,30 @@ async function loginToTwitter() {
     const url = "https://x.com/i/flow/login"
     await driver.get(url);
 
-    const username = await driver.wait(until.elementLocated(By.css('input[autocomplete="username"]')),20000);
+    const username = await driver.wait(until.elementLocated(By.css('input[autocomplete="username"]')), 20000);
     await username.sendKeys(`${process.env.TWITTER_NAME}`, Key.ENTER);
 
-    const password = await driver.wait(until.elementLocated(By.css('input[name="password"]')),10000);
+    const password = await driver.wait(until.elementLocated(By.css('input[name="password"]')), 10000);
     await password.sendKeys(`${process.env.TWITTER_PASSWORD}`, Key.ENTER);
 
-    await driver.wait(until.elementLocated(By.css('div[data-testid="trend"]')),100000);
+    // Check if the email input field is present
+    const emailInputField = await driver.findElements(By.css('input[autocomplete="email"]'));
+    if (emailInputField.length > 0) {
+      const email = await driver.findElement(By.css('input[autocomplete="email"]'));
+      await email.sendKeys(`${process.env.TWITTER_EMAIL}`, Key.ENTER);
+    }
+
+    await driver.wait(until.elementLocated(By.css('div[data-testid="trend"]')), 100000);
     
-      const trendDivs = await driver.findElements(By.css('div[data-testid="trend"]'),100000);
-      const trendTexts = [];
-      for (let div of trendDivs) {
-        const hashtagElement = await div.findElement(By.xpath('./div/div[2]/span'));
-        
-        const hashtagText = await hashtagElement.getText();
-      
-        trendTexts.push(hashtagText);
-        console.log(hashtagText);
-      }
-      return trendTexts;// Using sleep in place of time.sleep
+    const trendDivs = await driver.findElements(By.css('div[data-testid="trend"]'), 100000);
+    const trendTexts = [];
+    for (let div of trendDivs) {
+      const hashtagElement = await div.findElement(By.xpath('./div/div[2]/span'));
+      const hashtagText = await hashtagElement.getText();
+      trendTexts.push(hashtagText);
+      console.log(hashtagText);
+    }
+    return trendTexts;
   } catch (error) {
     console.error('Error:', error);
   } finally {
@@ -59,6 +62,7 @@ async function loginToTwitter() {
     }
   }
 }
+
 async function getTitkle() {
   let driver;
   try {
@@ -77,7 +81,7 @@ async function getTitkle() {
     chromeOptions.addArguments("--no-sandbox");
     chromeOptions.addArguments("--remote-debugging-port=9222")
 
-    chromeOptions.windowSize(screen);
+    // chromeOptions.windowSize(screen);
 
     driver = await new Builder().forBrowser('chrome').setChromeOptions(chromeOptions).build();
 
