@@ -16,7 +16,7 @@ async function loginToTwitter() {
     };
     
 
-    chromeOptions.addArguments("--headless=new")
+    chromeOptions.addArguments("--headless")
         chromeOptions.addArguments("--start-maximized");
     chromeOptions.excludeSwitches("enable-automation");
     chromeOptions.addArguments("--enable-javascript");
