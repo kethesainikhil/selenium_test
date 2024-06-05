@@ -14,14 +14,12 @@ async function loginToTwitter() {
       width: 1920,
       height: 1080
     };
-
-    chromeOptions.addArguments("--headless")
-        chromeOptions.addArguments("--start-maximized");
+    // chromeOptions.addArguments("--headless")
+    chromeOptions.addArguments("--start-maximized");
     chromeOptions.excludeSwitches("enable-automation");
     chromeOptions.addArguments("--enable-javascript");
     chromeOptions.addArguments("--disable-gpu");
     chromeOptions.addArguments("--no-sandbox");
-    // chromeOptions.addArguments("--remote-debugging-port=9222")
 
     chromeOptions.windowSize(screen);
 
@@ -37,11 +35,19 @@ async function loginToTwitter() {
     await password.sendKeys(`${process.env.TWITTER_PASSWORD}`, Key.ENTER);
 
     // Check if the email input field is present
-    // const emailInputField = await driver.findElements(By.css('input[autocomplete="email"]'),20000);
-    // if (emailInputField) {
-    //   const email = await driver.findElement(By.css('input[autocomplete="email"]'),10000);
-    //   await email.sendKeys(`${process.env.TWITTER_EMAIL}`, Key.ENTER);
-    // }
+    await driver.manage().setTimeouts({ implicit: 10000 });
+    const emailInputField = await driver.findElements(By.css('input[autocomplete="email"]'),10000);
+    console.log(emailInputField,"check point")
+    if (emailInputField.length > 0) {
+      const email = await driver.findElement(By.css('input[autocomplete="email"]'));
+      await email.sendKeys(`${process.env.TWITTER_EMAIL}`, Key.ENTER);
+    }
+    const telInputField = await driver.findElements(By.css('input[autocomplete="tel"]'),10000);
+    console.log(telInputField,"check point")
+    if (telInputField.length > 0) {
+      const email = await driver.findElement(By.css('input[autocomplete="tel"]'));
+      await email.sendKeys(`${process.env.TWITTER_PHONE}`, Key.ENTER);
+    }
 
     await driver.wait(until.elementLocated(By.css('div[data-testid="trend"]')), 100000);
     
@@ -62,6 +68,7 @@ async function loginToTwitter() {
     }
   }
 }
+
 
 async function getTitkle() {
   let driver;
