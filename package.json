@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "heroku-postbuild": "npm run build",
-    "build": "webpack"
+    "build": "node index.js"
   },
   
   "keywords": [],
