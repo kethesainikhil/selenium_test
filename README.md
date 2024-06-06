@@ -7,7 +7,11 @@ Follow these steps to set up your project:
 Open your terminal and run the following commands:
 
 ```bash
-git clone <project_repository_url> && cd <project_directory_name>
+git clone https://github.com/kethesainikhil/selenium_test.git
+```
+Change directory
+```bash
+ cd selenium_test
 
 ```
 # Twitter Credentials
