@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Twitter Hashtags</title>
+<style>
+  #loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 2s linear infinite;
+    display: none;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>
+</head>
+<body>
+
+<div id="message">Fetch the latest trends</div>
+<div id="loader"></div>
+<div id="hashtags-container">
+  <!-- Hashtags will be displayed here -->
+</div>
+
+<button id="fetchHashtagsBtn">Fetch Hashtags</button>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const message = document.getElementById('message');
+  const loader = document.getElementById('loader');
+  const fetchHashtagsBtn = document.getElementById('fetchHashtagsBtn');
+
+  fetchHashtagsBtn.addEventListener('click', async () => {
+    try {
+      message.textContent = 'Fetch the latest trends';
+      loader.style.display = 'block';
+      
+      const response = await fetch('http://localhost:4000/get-hashtags');
+      const data = await response.json();
+      const hashtagsContainer = document.getElementById('hashtags-container');
+      hashtagsContainer.innerHTML = ''; // Clear previous hashtags
+      data.forEach(hashtag => {
+        const div = document.createElement('div');
+        div.textContent = hashtag;
+        hashtagsContainer.appendChild(div);
+      });
+      
+      message.textContent = ''; // Clear the message
+      loader.style.display = 'none'; // Hide the loader
+    } catch (error) {
+      console.error('Error fetching hashtags:', error);
+      message.textContent = 'Error fetching hashtags. Please try again later.';
+      loader.style.display = 'none'; // Hide the loader
+    }
+  });
+});
+</script>
+
+</body>
+</html>
